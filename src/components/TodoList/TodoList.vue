@@ -1,11 +1,28 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { useTodoList } from './todoList';
+import { onMounted, ref } from 'vue';
+import { useTodoList } from './useTodoList';
 
-onMounted(async () => {
+type ToDo = {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+};
+
+const toDos = ref<ToDo[]>([]);
+
+async function init() {
   const { fetchToDos } = useTodoList();
-  await fetchToDos();
+  toDos.value = await fetchToDos();
+}
+
+onMounted(() => {
+  init();
 });
 </script>
 
-<template><h1>ToDoList</h1></template>
+<template>
+  <div>
+    <div v-for="item in toDos" :key="item.id" data-test="todo-item">{{ item.title }}</div>
+  </div>
+</template>
