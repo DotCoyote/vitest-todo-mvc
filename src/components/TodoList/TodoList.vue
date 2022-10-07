@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useTodoList } from './useTodoList';
-
-type ToDo = {
-  userId: number;
-  id: number;
-  title: string;
-  completed: boolean;
-};
+import { ToDo } from './todo.types';
+import TodoItem from './TodoItem.vue';
 
 const toDos = ref<ToDo[]>([]);
 
@@ -23,6 +18,6 @@ onMounted(() => {
 
 <template>
   <div>
-    <div v-for="item in toDos" :key="item.id" data-test="todo-item">{{ item.title }}</div>
+    <todo-item v-for="item in toDos" :key="item.id" :todo="item" />
   </div>
 </template>

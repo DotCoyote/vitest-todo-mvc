@@ -1,17 +1,18 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { mount, VueWrapper } from '@vue/test-utils';
+import { shallowMount, VueWrapper } from '@vue/test-utils';
 import TodoListVue from '../TodoList.vue';
+import TodoItem from '../TodoItem.vue';
 import { axiosMock } from '../../../../setupTests';
 
 describe('TodoList Component', () => {
   let wrapper: VueWrapper;
 
   beforeEach(() => {
-    wrapper = mount(TodoListVue);
+    wrapper = shallowMount(TodoListVue);
   });
 
   it('should list results', async () => {
     expect(axiosMock.history.get.length).toBe(1);
-    expect(wrapper.findAll('[data-test="todo-item"]').length).toEqual(2);
+    expect(wrapper.findAllComponents(TodoItem).length).toEqual(2);
   });
 });
