@@ -2099,6 +2099,11 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
+ts-essentials@^9.3.0:
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/ts-essentials/-/ts-essentials-9.3.0.tgz#7e639c1a76b1805c3c60d6e1b5178da2e70aea02"
+  integrity sha512-XeiCboEyBG8UqXZtXl59bWEi4ZgOqRsogFDI6WDGIF1LmzbYiAkIwjkXN6zZWWl4re/lsOqMlYfe8KA0XiiEPw==
+
 ts-node@^10.9.1:
   version "10.9.1"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.9.1.tgz#e73de9102958af9e1f0b168a6ff320e25adcff4b"
@@ -2199,6 +2204,13 @@ v8-compile-cache-lib@^3.0.1:
     rollup "~2.78.0"
   optionalDependencies:
     fsevents "~2.3.2"
+
+vitest-mock-extended@^0.1.16:
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/vitest-mock-extended/-/vitest-mock-extended-0.1.16.tgz#0944a54994b54b1f4ab616cf68f72983d9a813e5"
+  integrity sha512-Q8ScSuWGxjUU5L7ey81Iebi5huthx7tS4zZaaPIS3kOvmaxozZ6p17jch2bDfchxKczyKYglsQpvdCG4h9PLpQ==
+  dependencies:
+    ts-essentials "^9.3.0"
 
 vitest@^0.23.4:
   version "0.23.4"
