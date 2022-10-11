@@ -2,7 +2,7 @@ stages:
   - test
 
 test:
-  image: cypress/included:10.4.0
+  image: node:18-alpine
   stage: test
   variables:
     VITE_API_URL: "http://localhost"
@@ -19,5 +19,5 @@ test:
       -e YARN_CACHE_FOLDER=/tmp/yarn
       -e NPM_CONFIG_CACHE=/tmp/npm
       --entrypoint scripts/run-tests.sh
-      cypress/included:10.4.0
+      node:18-alpine
   coverage: /Statements.*?(\d+(?:\.\d+)?)%/
