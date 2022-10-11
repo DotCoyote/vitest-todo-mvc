@@ -8,6 +8,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest --ui",
+    "test:ci": "vitest",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {

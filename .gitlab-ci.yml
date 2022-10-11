@@ -1,23 +1,32 @@
+image: node:latest
+
 stages:
+  - build
   - test
 
-test:
-  image: node
-  stage: test
-  variables:
-    VITE_API_URL: "http://localhost"
+build:
+  stage: build
   script:
-    - docker run --rm
-      --network=host
-      -v $PWD:/e2e
-      -v /tmp/yarn:/tmp/yarn
-      -v /tmp/npm:/tmp/npm
-      -w /e2e
-      -e YARN_ENABLE_IMMUTABLE_INSTALLS=${YARN_ENABLE_IMMUTABLE_INSTALLS}
-      -e VITE_API_URL=${VITE_API_URL}
-      -e CYPRESS_CACHE_FOLDER=/e2e/cypress_cache
-      -e YARN_CACHE_FOLDER=/tmp/yarn
-      -e NPM_CONFIG_CACHE=/tmp/npm
-      --entrypoint scripts/run-tests.sh
-      node
-  coverage: /Statements.*?(\d+(?:\.\d+)?)%/
+    - yarn
+  cache:
+    paths:
+      - node_modules/
+  artifacts:
+    expire_in: 1 days
+    when: on_success
+    paths:
+      - node_modules/
+
+test:
+  stage: test
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  dependencies:
+    - build
+  script:
+    - yarn test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - junit.xml
+      cobertura: coverage/cobertura-coverage.xml
