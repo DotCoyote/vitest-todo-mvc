@@ -2,6 +2,7 @@ stages:
   - test
 
 test:
+  image: cypress/included:10.4.0
   stage: test
   variables:
     VITE_API_URL: "http://localhost"
