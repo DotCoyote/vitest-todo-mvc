@@ -1,10 +1,9 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { useTodoList } from '../useTodoList';
 import { axiosMock } from '../../../../setupTests';
 import { ref } from 'vue';
 import { mock } from 'vitest-mock-extended';
 import { ToDo } from '../todo.types';
-import { useTodoItem } from '@/components/TodoList/useTodoItem';
 
 describe('useTodoList composable', () => {
   describe('fetchToDos', () => {
@@ -37,7 +36,7 @@ describe('useTodoList composable', () => {
 
   describe('toggleCompletedState', () => {
     it('should change the completed value', () => {
-      const { toggleCompletedState } = useTodoList();
+      const useTodoListComp = useTodoList();
       const todoItem1 = mock<ToDo>({
         id: 1,
         completed: false,
@@ -52,51 +51,13 @@ describe('useTodoList composable', () => {
       });
       const todoItems = ref([todoItem1, todoItem2, todoItem3]);
 
-      toggleCompletedState(1, todoItems);
-      expect(todoItems.value[0].completed).toEqual(true);
-
-      toggleCompletedState(3, todoItems);
-      expect(todoItems.value[2].completed).toEqual(false);
-    });
-
-    it('should work with mocked methods', function () {
-      vi.mock('../useTodoItem.ts', () => {
-        let _cache: any;
-        const useTodoItem = vi.fn(() => {
-          if (!_cache) {
-            _cache = {
-              isItemCompleted: vi.fn(() => false),
-            };
-          }
-          return _cache;
-        });
-        return { useTodoItem };
-      });
-
-      const todoItem1 = mock<ToDo>({
-        id: 1,
-        completed: false,
-      });
-
-      const todoItem2 = mock<ToDo>({
-        id: 2,
-        completed: true,
-      });
-
-      const todoItems = ref([todoItem1, todoItem2]);
-
-      const useTodoListComp = useTodoList();
-      const useTodoItemComp = useTodoItem();
-
+      expect(todoItem1.completed).toBe(false);
       useTodoListComp.toggleCompletedState(1, todoItems);
-      expect(useTodoItemComp.isItemCompleted).toHaveBeenCalledWith(todoItem1);
       expect(todoItem1.completed).toBe(true);
 
-      // Due to mock, this will not be toggled
-      expect(todoItem2.completed).toBe(true);
-      useTodoListComp.toggleCompletedState(2, todoItems);
-      expect(useTodoItemComp.isItemCompleted).toHaveBeenCalledWith(todoItem2);
-      expect(todoItem2.completed).toBe(true);
+      expect(todoItem3.completed).toBe(true);
+      useTodoListComp.toggleCompletedState(3, todoItems);
+      expect(todoItem3.completed).toBe(false);
     });
   });
 });
