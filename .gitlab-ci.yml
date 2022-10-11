@@ -1,0 +1,22 @@
+stages:
+  - test
+
+test:
+  stage: test
+  variables:
+    VITE_API_URL: "http://localhost"
+  script:
+    - docker run --rm
+      --network=host
+      -v $PWD:/e2e
+      -v /tmp/yarn:/tmp/yarn
+      -v /tmp/npm:/tmp/npm
+      -w /e2e
+      -e YARN_ENABLE_IMMUTABLE_INSTALLS=${YARN_ENABLE_IMMUTABLE_INSTALLS}
+      -e VITE_API_URL=${VITE_API_URL}
+      -e CYPRESS_CACHE_FOLDER=/e2e/cypress_cache
+      -e YARN_CACHE_FOLDER=/tmp/yarn
+      -e NPM_CONFIG_CACHE=/tmp/npm
+      --entrypoint scripts/run-tests.sh
+      cypress/included:10.4.0
+  coverage: /Statements.*?(\d+(?:\.\d+)?)%/
