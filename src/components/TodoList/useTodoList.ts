@@ -1,8 +1,11 @@
 import axios from 'axios';
 import { ToDo } from './todo.types';
 import { Ref } from 'vue';
+import { useTodoItem } from './useTodoItem';
 
 export function useTodoList() {
+  const useTodoItemComp = useTodoItem();
+
   async function fetchToDos() {
     const { data } = await axios.get('https://jsonplaceholder.typicode.com/todos');
     return data;
@@ -14,8 +17,10 @@ export function useTodoList() {
 
   function toggleCompletedState(itemId: number, todoItems: Ref<ToDo[]>) {
     const item = getItemById(itemId, todoItems);
-    if (item) {
-      item.completed = !item.completed;
+    if (item && useTodoItemComp.isItemCompleted(item)) {
+      item.completed = false;
+    } else if (item && !useTodoItemComp.isItemCompleted(item)) {
+      item.completed = true;
     }
   }
 
