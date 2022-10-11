@@ -2,7 +2,7 @@ stages:
   - test
 
 test:
-  image: node:18-alpine
+  image: node
   stage: test
   variables:
     VITE_API_URL: "http://localhost"
@@ -19,5 +19,5 @@ test:
       -e YARN_CACHE_FOLDER=/tmp/yarn
       -e NPM_CONFIG_CACHE=/tmp/npm
       --entrypoint scripts/run-tests.sh
-      node:18-alpine
+      node
   coverage: /Statements.*?(\d+(?:\.\d+)?)%/
