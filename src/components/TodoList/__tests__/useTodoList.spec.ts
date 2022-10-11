@@ -59,7 +59,7 @@ describe('useTodoList composable', () => {
       expect(todoItems.value[2].completed).toEqual(false);
     });
 
-    it.only('should work with mocked methods', function () {
+    it('should work with mocked methods', function () {
       vi.mock('../useTodoItem.ts', () => {
         let _cache: any;
         const useTodoItem = vi.fn(() => {
