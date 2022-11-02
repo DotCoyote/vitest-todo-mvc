@@ -1,34 +1,22 @@
-<script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+<script lang="ts" setup>
+import { onMounted, ref } from 'vue';
 import { useTodoList } from './useTodoList';
 import { ToDo } from './todo.types';
 import TodoItem from './TodoItem.vue';
 
-export default defineComponent({
-  components: {
-    TodoItem,
-  },
-  setup(props, { expose }) {
-    const toDos = ref<ToDo[]>([]);
-    const todoListComp = useTodoList();
+const toDos = ref<ToDo[]>([]);
+const todoListComp = useTodoList();
 
-    async function init() {
-      toDos.value = await todoListComp.fetchToDos();
-    }
+async function init() {
+  toDos.value = await todoListComp.fetchToDos();
+}
 
-    function onTodoItemClick(itemId: number) {
-      todoListComp.toggleCompletedState(itemId, toDos);
-    }
+function onTodoItemClick(itemId: number) {
+  todoListComp.toggleCompletedState(itemId, toDos);
+}
 
-    onMounted(() => {
-      init();
-    });
-
-    return {
-      onTodoItemClick,
-      toDos,
-    };
-  },
+onMounted(() => {
+  init();
 });
 </script>
 
